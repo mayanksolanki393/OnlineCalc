@@ -21,6 +21,10 @@
 					<td><input type="number" value="<%=request.getAttribute("result")%>" disabled></td>
 				</tr>
 				<tr>
+					<td>Message</td>
+					<td><input type="text" value="<%=request.getAttribute("error")%>" disabled></td>
+				</tr>
+				<tr>
 					<td colspan="2">
 						<input type="submit" name="command" value="+">
 						<input type="submit" name="command" value="-">

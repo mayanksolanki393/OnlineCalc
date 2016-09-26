@@ -38,31 +38,39 @@ public class CalculateController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("command");
-		double num1 = Double.parseDouble(request.getParameter("num1"));
-		double num2 = Double.parseDouble(request.getParameter("num2"));
 		double result = 0.0;
-		
+		request.setAttribute("error", "");
 		try{
-			switch(action){
-				case "+" :
-					result = Calculator.add(num1, num2);
-					break;
-				case "-" :
-					result = Calculator.subtract(num1, num2);
-					break;
-				case "/" :
-					result = Calculator.divide(num1, num2);
-					break;
-				case "*" :
-					result = Calculator.multiply(num1, num2);
-					break;
-				default:
-					result = 0.0;
+			String action = request.getParameter("command");
+			double num1 = Double.parseDouble(request.getParameter("num1"));
+			double num2 = Double.parseDouble(request.getParameter("num2"));
+			
+			try{
+				switch(action){
+					case "+" :
+						result = Calculator.add(num1, num2);
+						break;
+					case "-" :
+						result = Calculator.subtract(num1, num2);
+						break;
+					case "/" :
+						result = Calculator.divide(num1, num2);
+						break;
+					case "*" :
+						result = Calculator.multiply(num1, num2);
+						break;
+					default:
+						result = 0.0;
+				}
+			}
+			catch(Exception ex){
+				result = 0.0;
+				request.setAttribute("error", "you are trying to divide by zero");
 			}
 		}
-		catch(Exception ex){
-			result = 0.0;
+		catch(NumberFormatException ex){
+			request.setAttribute("error", "please enter a valid number");
+			result = 0.0;	
 		}
 		
 		request.setAttribute("result", result);
